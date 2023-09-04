@@ -67,6 +67,7 @@ const TranslatorProvider: React.FC<{children: React.ReactNode}> = ({
           setFrom(undefined);
           setTo(undefined);
           setValue('');
+          //@ts-ignore
           return result;
         } catch (error) {
           setFrom(undefined);
