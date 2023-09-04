@@ -182,18 +182,13 @@ export const INJECTED_JAVASCRIPTS: Record<
       window.ReactNativeWebView.postMessage(doc.innerText)
     }, 200)
     `,
-    hook: `
-    setTimeout(() => {
-      // ---- for EU cache policy ---- //
-      try{document.querySelectorAll("div[data-is-touch-wrapper] > button")[1].click();}catch(e){}
-    }, 500)
-
-    setInterval(() => {
-      var selector = 'c-wiz[role] > div > div[jsaction] > div > div'
-      var doc = document.querySelector(selector)
-      if(doc) window.ReactNativeWebView.postMessage(doc.innerText)
-      else window.ReactNativeWebView.postMessage('${LOADING_MESSSAGE}')
-    }, 200)
+        hook: `
+          setInterval(() => {
+                  var selector = 'c-wiz[role] > div > div[jsaction] > div > div'
+                  var doc = document.querySelector(selector)
+                  if(doc) window.ReactNativeWebView.postMessage(doc.innerText)
+                  else window.ReactNativeWebView.postMessage('${LOADING_MESSSAGE}')
+          }, 200)
   `,
   },
 };
