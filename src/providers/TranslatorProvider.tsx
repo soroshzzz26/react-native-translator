@@ -54,24 +54,27 @@ const TranslatorProvider: React.FC<{children: React.ReactNode}> = ({
         timeout?: number;
       },
     ): Promise<string> => {
-      try {
-        setFrom(_from);
-        setTo(_to);
-        setValue(_value);
-        setType(_type);
-        const result: string = await new Promise((_res, reject) => {
-          //@ts-ignore
-          res.current = _res;
-          setTimeout(() => reject('timeout'), timeout);
-        });
-        return result;
-      } catch (error) {
-        setFrom(undefined);
-        setTo(undefined);
-        setValue('');
-        setType('google');
-        throw error;
-      }
+        try {
+          setFrom(_from);
+          setTo(_to);
+          setValue(_value);
+          setType(_type);
+          const result = await new Promise((_res, reject) => {
+            //@ts-ignore
+            res.current = _res;
+            setTimeout(() => reject('timeout'), timeout);
+          });
+          setFrom(undefined);
+          setTo(undefined);
+          setValue('');
+          return result;
+        } catch (error) {
+          setFrom(undefined);
+          setTo(undefined);
+          setValue('');
+          setType('google');
+          throw error;
+        }
     },
     [],
   );
@@ -94,10 +97,14 @@ const TranslatorProvider: React.FC<{children: React.ReactNode}> = ({
             source={{
               uri: INJECTED_JAVASCRIPTS[type].url(from, to, value),
             }}
-            cacheEnabled={true}
+            cacheEnabled={false}
             onMessage={event => {
               const result = event.nativeEvent.data;
-              if (result === LOADING_MESSSAGE) {
+              if (
+                result === LOADING_MESSSAGE ||
+                result === 'Enter a URL' ||
+                result === 'نشانی وب را وارد کنید'
+              ) {
                 return;
               }
               res.current && res.current(result);
