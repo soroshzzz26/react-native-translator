@@ -98,7 +98,7 @@ const TranslatorProvider: React.FC<{children: React.ReactNode}> = ({
             source={{
               uri: INJECTED_JAVASCRIPTS[type].url(from, to, value),
             }}
-            cacheEnabled={false}
+            cacheEnabled={true}
             onMessage={event => {
               const result = event.nativeEvent.data;
               if (
